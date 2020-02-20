@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-regioncomponet ref='cityAll' v-bind:provinceAll= 'provinceAll' @updateProv='updateProv' @updateCity='updateCity'></v-regioncomponet>
+    <v-regioncomponet ref='levelTwoAll' v-bind:levelOneAll= 'levelOneAll' :id1= 'id1' :id2= 'id2' :id3= 'id3' @onLevelOne='onLevelOne' @onLevelTwo='onLevelTwo' @onLevelThree='onLevelThree'></v-regioncomponet>
 </div>
 </template>
 <script>
@@ -8,12 +8,12 @@ import Regioncomponet from './components/regioncomponet.vue'
 export default {
     data () {
         return{
-            provinceAll:[//省
+            levelOneAll:[//省
                 {id:1,name:'浙江省'},
                 {id:2,name:'江苏省'},
                 {id:3,name:'广东省'},
             ],
-            cityAll:[//市
+            levelTwoAll:[//市
                 {id:1,name:'杭州市',parentId:1},
                 {id:2,name:'温州市',parentId:1},
                 {id:3,name:'绍兴市',parentId:1},
@@ -24,7 +24,7 @@ export default {
                 {id:8,name:'江门市',parentId:3},
                 {id:9,name:'汕头市',parentId:3},
             ],
-            areaAll:[//区
+            levelThreeAll:[//区
                 {id:1,name:'萧山区',parentId:1},
                 {id:2,name:'余杭区',parentId:1},
                 {id:3,name:'龙湾区',parentId:2},
@@ -44,34 +44,37 @@ export default {
                 {id:17,name:'龙湖区',parentId:9},
                 {id:18,name:'金平区',parentId:9},
             ],
+            id1:2,
+            id2:4,
+            id3:7,
             }
     },
     components:{
         'v-regioncomponet':Regioncomponet,
     },
     methods:{
-        updateProv(id){
-            console.log('父组件拿到省份id:',id)
-            var city = [];
-                this.cityAll.forEach(function(item,index) {
+        onLevelOne(id){
+            // console.log('父组件拿到省份id:',id)
+            var levelTwo = [];
+                this.levelTwoAll.forEach(function(item,index) {
                     if(item.parentId==id){
-                        city.push(item)
+                        levelTwo.push(item)
                         }
                 });
-                        this.$refs.cityAll.getCity(city)
+                        this.$refs.levelTwoAll.getLevelTwo(levelTwo)
             },
-        updateCity(id){
-            console.log('父组件拿到城市id:',id)
-            var area = [];
-                this.areaAll.forEach(function(item,index) {
+        onLevelTwo(id){
+            // console.log('父组件拿到城市id:',id)
+            var levelThree = [];
+                this.levelThreeAll.forEach(function(item,index) {
                     if(item.parentId==id){
-                        area.push(item)
+                        levelThree.push(item)
                         }
                 });
-                    this.$refs.cityAll.getArea(area)
+                    this.$refs.levelTwoAll.getLevelThree(levelThree)
             },
-        updateArea(id){
-            console.log('父组件拿到区县id:',id)
+        onLevelThree(id){
+            // console.log('父组件拿到区县id:',id)
             }
     }
     
